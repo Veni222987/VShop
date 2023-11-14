@@ -86,7 +86,7 @@ const doLogin=()=>{
               </el-form-item>
               <el-form-item prop="agree" label-width="22px">
                 <el-checkbox size="large" v-model="form.agree">
-                  我已同意隐私条款和服务条款
+                  未注册的用户将会自动注册<br/>登录即代表您同意隐私条款
                 </el-checkbox>
               </el-form-item>
               <el-button size="large" class="subBtn" @click="doLogin">点击登录</el-button>
