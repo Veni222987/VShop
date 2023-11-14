@@ -7,15 +7,16 @@ import lombok.NoArgsConstructor;
 import java.sql.Timestamp;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Item {
+@AllArgsConstructor
+public class Product {
     Long id;
     String pid;
+    String title;
     String cover;
+    String seller;
+    String detailUrl;
     String attributes;
-    Integer price;
-    Integer stock;
     Timestamp createTime;
     Timestamp updateTime;
 }
