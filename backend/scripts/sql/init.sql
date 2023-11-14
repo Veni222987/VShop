@@ -13,7 +13,7 @@ create table `user` (
     `gender` varchar(255) not null,
     `phone_number` varchar(255) not null,
     `create_time` datetime not null,
-    primary key (`uid`)
+    primary key (`id`)
 ) engine=InnoDB default charset=utf8;
 
 create table `item` (
@@ -38,7 +38,7 @@ create table `product` (
     `attributes` text,
     `create_time` datetime not null,
     `update_time` datetime not null,
-    primary key (`pid`)
+    primary key (`id`)
 ) engine=InnoDB default charset=utf8;
 
 create table `cart` (
@@ -62,3 +62,9 @@ create table `consume_history` (
     `create_time` datetime not null,
     primary key (`id`)
 ) engine=InnoDB default charset=utf8;
+-- index====================
+create index `idx_uid` on `user`(`uid`);
+create index `idx_pid` on `item`(`pid`);
+
+-- function=================
+
