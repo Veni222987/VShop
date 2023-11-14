@@ -12,7 +12,7 @@ create table `user` (
     `avatar` varchar(255) not null,
     `gender` varchar(255) not null,
     `phone_number` varchar(255) not null,
-    `create_time` datetime not null,
+    `create_time` datetime,
     primary key (`id`)
 ) engine=InnoDB default charset=utf8;
 
@@ -23,8 +23,8 @@ create table `item` (
     `attributes` text,
     `price` int(11) not null,
     `stock` int(11) not null,
-    `create_time` datetime not null,
-    `update_time` datetime not null,
+    `create_time` datetime,
+    `update_time` datetime,
     primary key (`id`)
 ) engine=InnoDB default charset=utf8;
 
@@ -36,8 +36,8 @@ create table `product` (
     `seller` varchar(255) not null,
     `detail_url` varchar(255),
     `attributes` text,
-    `create_time` datetime not null,
-    `update_time` datetime not null,
+    `create_time` datetime,
+    `update_time` datetime,
     primary key (`id`)
 ) engine=InnoDB default charset=utf8;
 
@@ -59,7 +59,7 @@ create table `consume_history` (
     `sum`  int(11) not null,
     `recipient` varchar(255) not null,
     `address` varchar(255) not null,
-    `create_time` datetime not null,
+    `create_time` datetime,
     primary key (`id`)
 ) engine=InnoDB default charset=utf8;
 -- index====================
