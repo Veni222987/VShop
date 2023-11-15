@@ -9,3 +9,4 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)// 运行时有效
 public @interface LoginRequired {
 }
+

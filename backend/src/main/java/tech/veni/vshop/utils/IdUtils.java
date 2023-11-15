@@ -7,11 +7,11 @@ public class IdUtils {
     private static final Snowflake UID_SNOWFLAKE = IdUtil.getSnowflake(1, 1);
     private static final Snowflake PID_SNOWFLAKE = IdUtil.getSnowflake(2, 1);
 
-    public static long generateUid() {
+    public static Long generateUid() {
         return UID_SNOWFLAKE.nextId();
     }
 
-    public static long generateVid() {
+    public static Long generatePid() {
         return PID_SNOWFLAKE.nextId();
     }
 }
