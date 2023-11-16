@@ -41,6 +41,8 @@ create table `product`
     `cover`       varchar(255),
     `seller`      varchar(255) not null,
     `detail_url`  varchar(255),
+    `category`    varchar(255) not null,
+    `price`       double       not null,
     `attributes`  text,
     `create_time` datetime,
     `update_time` datetime,
@@ -89,9 +91,17 @@ create table `consume_history`
     primary key (`id`)
 ) engine = InnoDB
   default charset = utf8;
--- index====================
+
+
+CREATE TABLE `tag_bitmap`
+(
+    `id`     int          NOT NULL AUTO_INCREMENT,
+    `tag`    varchar(255) NOT NULL COMMENT '标签',
+    `count`  int          NOT NULL DEFAULT 0 COMMENT '属于该标签的商品',
+    `bitmap` blob         NULL,
+    PRIMARY KEY (`id`)
+);
+
+-- index==============================================================
 create index `idx_uid` on `user` (`uid`);
 create index `idx_pid` on `item` (`pid`);
--- key======================
--- function=================
-

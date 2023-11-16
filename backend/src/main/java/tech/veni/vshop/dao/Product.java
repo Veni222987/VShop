@@ -16,6 +16,8 @@ public class Product {
     String cover;
     String seller;
     String detailUrl;
+    String category;
+    Double price;
     String attributes;
     Timestamp createTime;
     Timestamp updateTime;

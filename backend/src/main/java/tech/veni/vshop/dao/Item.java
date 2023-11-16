@@ -14,7 +14,7 @@ public class Item {
     String pid;
     String cover;
     String attributes;
-    Integer price;
+    Double price;
     Integer stock;
     Timestamp createTime;
     Timestamp updateTime;
