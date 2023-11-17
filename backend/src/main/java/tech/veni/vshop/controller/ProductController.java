@@ -1,5 +1,6 @@
 package tech.veni.vshop.controller;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tech.veni.vshop.dao.Product;
@@ -35,8 +36,8 @@ public class ProductController {
         return res;
     }
 
-    @GetMapping("/list/{category}")
-    public HashMap<String, Object> listByCategory(@PathVariable String category) {
+    @GetMapping("/list/category")
+    public HashMap<String, Object> listByCategory(@Param("category") String category) {
         List<Product> products = ProductService.listProducts(category);
         HashMap<String, Object> res = new HashMap<>();
         res.put("code", 200);

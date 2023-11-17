@@ -42,6 +42,14 @@ public class ProductServiceImpl implements ProductService {
                 new Timestamp(System.currentTimeMillis())
         );
         productMapper.insert(product);
+        //将pid赋值给items
+        for (Item item : req4CreateProduct.getItems()) {
+            item.setPid(product.getPid());
+            Timestamp now = new Timestamp(System.currentTimeMillis());
+            item.setCreateTime(now);
+            item.setUpdateTime(now);
+        }
+
         // 插入Item
         itemMapper.insertBatch(req4CreateProduct.getItems());
     }
