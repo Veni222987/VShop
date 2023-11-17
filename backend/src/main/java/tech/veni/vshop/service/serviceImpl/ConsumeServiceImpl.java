@@ -2,10 +2,13 @@ package tech.veni.vshop.service.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import tech.veni.vshop.dao.Cart;
+import tech.veni.vshop.dao.ConsumeHistory;
 import tech.veni.vshop.dao.Item;
 import tech.veni.vshop.dao.Order;
 import tech.veni.vshop.dao.mapper.CartMapper;
+import tech.veni.vshop.dao.mapper.ConsumeHistoryMapper;
 import tech.veni.vshop.dao.mapper.ItemMapper;
 import tech.veni.vshop.dao.mapper.OrderMapper;
 import tech.veni.vshop.service.ConsumeService;
@@ -29,6 +32,9 @@ public class ConsumeServiceImpl implements ConsumeService {
 
     @Autowired
     OrderMapper orderMapper;
+
+    @Autowired
+    ConsumeHistoryMapper consumeHistoryMapper;
 
     @Override
     public void addCart(String uid, String itemId, Integer count) {
@@ -101,5 +107,24 @@ public class ConsumeServiceImpl implements ConsumeService {
         cartMapper.deleteByUid(uid);
         return res;
     }
+
+    @Override
+    public String pay(String uid, String oid) {
+        List<Order> orders = orderMapper.selectByOid(oid);
+        if (ObjectUtils.isEmpty(orders))
+            return "订单不存在";
+        for (var order : orders) {
+            consumeHistoryMapper.insert(order);
+        }
+        //删除orders
+        orderMapper.deleteByOid(oid);
+        return "支付成功";
+    }
+
+    @Override
+    public List<ConsumeHistory> listConsumeHistory(String uid) {
+        return consumeHistoryMapper.list(uid);
+    }
+
 
 }

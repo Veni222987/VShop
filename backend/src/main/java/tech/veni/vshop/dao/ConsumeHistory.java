@@ -14,8 +14,8 @@ public class ConsumeHistory {
     String oid;
     String uid;
     String itemId;
+    Double sum;
     Integer count;
-    Integer sum;
     String recipient;
     String address;
     String phoneNumber;
