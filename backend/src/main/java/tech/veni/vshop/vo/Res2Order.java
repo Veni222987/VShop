@@ -10,16 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Res2Order {
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public class ShortItem {
-        String title;
-        String cover;
-        String seller;
-        Integer count;
-        Double price;
-    }
 
     String uid;
     String oid;

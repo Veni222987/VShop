@@ -68,9 +68,9 @@ create table `order`
     `item_id`      varchar(255) not null,
     `sum`          double       not null,
     `count`        int(11)      not null,
-    `recipient`    varchar(255) not null,
-    `address`      varchar(255) not null,
-    `phone_number` varchar(255) not null,
+    `recipient`    varchar(255),
+    `address`      varchar(255),
+    `phone_number` varchar(255),
     `create_time`  datetime,
     primary key (`oid`)
 ) engine = InnoDB
@@ -84,9 +84,9 @@ create table `consume_history`
     `item_id`      varchar(255) not null,
     `count`        int(11)      not null,
     `sum`          double       not null,
-    `recipient`    varchar(255) not null,
-    `address`      varchar(255) not null,
-    `phone_number` varchar(255) not null,
+    `recipient`    varchar(255),
+    `address`      varchar(255),
+    `phone_number` varchar(255),
     `create_time`  datetime,
     primary key (`id`)
 ) engine = InnoDB

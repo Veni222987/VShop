@@ -17,4 +17,7 @@ public interface OrderMapper {
 
     @Delete("DELETE FROM `order` WHERE `oid` = #{oid}")
     Integer deleteByOid(@Param("oid") String oid);
+
+    @Select("SELECT * FROM `order` WHERE `uid` = #{uid}")
+    List<Order> selectByUid(@Param("uid") String uid);
 }

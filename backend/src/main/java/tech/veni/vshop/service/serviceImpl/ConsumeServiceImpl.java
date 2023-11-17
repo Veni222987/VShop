@@ -15,6 +15,7 @@ import tech.veni.vshop.service.ConsumeService;
 import tech.veni.vshop.utils.TimeUtils;
 import tech.veni.vshop.vo.Res2Cart;
 import tech.veni.vshop.vo.Res2Order;
+import tech.veni.vshop.vo.ShortItem;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class ConsumeServiceImpl implements ConsumeService {
                 null,
                 uid,
                 itemId,
-                1,
+                count,
                 0
         );
         cartMapper.insert(cart);
@@ -85,14 +86,14 @@ public class ConsumeServiceImpl implements ConsumeService {
             Integer count = cart.getCount();
             //获取某人的购物车中的某个商品
             Item item = itemMapper.selectById(itemId);
-            Res2Order.ShortItem shortItem = itemMapper.selectShortItemById(itemId);
-            shortItem.setCount(count);
+            ShortItem shortItem = itemMapper.selectShortItemById(Integer.valueOf(itemId));
+//            shortItem.setCount(count);
             res.getItems().add(shortItem);
             res.setSum(res.getSum() + item.getPrice() * count);
             //加入Order
             Order order = new Order(
-                    null,
                     uid + System.currentTimeMillis(),
+                    uid,
                     itemId,
                     item.getPrice() * count,
                     count,
@@ -126,5 +127,10 @@ public class ConsumeServiceImpl implements ConsumeService {
         return consumeHistoryMapper.list(uid);
     }
 
+
+    @Override
+    public List<Order> listOrder(String uid) {
+        return orderMapper.selectByUid(uid);
+    }
 
 }

@@ -1,6 +1,7 @@
 package tech.veni.vshop.service;
 
 import tech.veni.vshop.dao.ConsumeHistory;
+import tech.veni.vshop.dao.Order;
 import tech.veni.vshop.vo.Res2Cart;
 import tech.veni.vshop.vo.Res2Order;
 
@@ -46,4 +47,12 @@ public interface ConsumeService {
      * @return
      */
     List<ConsumeHistory> listConsumeHistory(String uid);
+
+    /**
+     * 查询某人的订单
+     *
+     * @param uid
+     * @return
+     */
+    List<Order> listOrder(String uid);
 }
