@@ -18,7 +18,7 @@ public interface ConsumeHistoryMapper {
 
     @Insert("INSERT INTO `consume_history` (`oid`, `uid`, `item_id`, `sum`,`count`,`recipient`,`address`,`phone_number`, `create_time`)"
             + " VALUES (#{orders.oid}, #{orders.uid}, #{orders.itemId}, #{orders.sum}, #{orders.count}, #{orders.recipient}, #{orders.address}, #{orders.phoneNumber}, #{orders.createTime})")
-    void insert(@Param("orders") Order orders);
+    void insertByOrders(@Param("orders") Order orders);
 
     @Select("SELECT * FROM `consume_history` WHERE `uid` = #{uid}")
     List<ConsumeHistory> list(@Param("uid") String uid);

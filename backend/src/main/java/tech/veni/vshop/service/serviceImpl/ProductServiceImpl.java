@@ -53,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> listProducts(String category) {
-        return productMapper.listProducts(category);
+        return productMapper.listProductsByCategory(category);
     }
 
     @Override

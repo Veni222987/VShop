@@ -18,7 +18,7 @@ public interface ProductMapper {
     List<Product> listProducts();
 
     @Select("SELECT * FROM `product` WHERE `category` = #{category} ORDER BY `create_time` DESC")
-    List<Product> listProducts(@Param("category") String category);
+    List<Product> listProductsByCategory(@Param("category") String category);
 
     @Select("SELECT * FROM `product` WHERE `pid` = #{pid}")
     Product getProductByPid(@Param("pid") String pid);

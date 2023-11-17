@@ -114,7 +114,7 @@ public class ConsumeServiceImpl implements ConsumeService {
         if (ObjectUtils.isEmpty(orders))
             return "订单不存在";
         for (var order : orders) {
-            consumeHistoryMapper.insert(order);
+            consumeHistoryMapper.insertByOrders(order);
         }
         //删除orders
         orderMapper.deleteByOid(oid);
