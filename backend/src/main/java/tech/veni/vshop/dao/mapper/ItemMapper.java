@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import tech.veni.vshop.dao.Item;
+import tech.veni.vshop.vo.Res2Order;
 
 import java.util.List;
 
@@ -25,5 +26,10 @@ public interface ItemMapper {
 
     @Select("SELECT * FROM `item` WHERE `pid` = #{pid}")
     List<Item> listItemsByPid(@Param("pid") String pid);
-    
+
+    @Select("SELECT * FROM `item` WHERE `id` = #{id}")
+    Item selectById(@Param("id") String id);
+
+    @Select("SELECT p.`title`, p.`seller`, i.`cover` FROM `product` p RIGHT JOIN `item` i ON p.`pid` = i.`pid` WHERE i.`id` = #{id}")
+    Res2Order.ShortItem selectShortItemById(@Param("id") String id);
 }
