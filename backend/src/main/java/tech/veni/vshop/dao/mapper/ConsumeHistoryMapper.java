@@ -25,7 +25,22 @@ public interface ConsumeHistoryMapper {
      * @param uid
      * @return
      */
-
     @Select("SELECT * FROM `consume_history` WHERE `uid` = #{uid}")
-    List<ConsumeHistory> list(@Param("uid") String uid);
+    List<ConsumeHistory> listByUid(@Param("uid") String uid);
+
+    /**
+     * 获取某个商家的全部订单
+     *
+     * @param sid
+     */
+    @Select("SELECT * FROM `consume_history` WHERE `sid` = #{sid}")
+    List<ConsumeHistory> listBySid(@Param("sid") String sid);
+
+    /**
+     * 获取某个商品的所有订单
+     *
+     * @param goodsId
+     */
+    @Select("SELECT * FROM `consume_history` WHERE `goods_id` = #{goodsId}")
+    List<ConsumeHistory> listByGoodsId(@Param("goodsId") String goodsId);
 }

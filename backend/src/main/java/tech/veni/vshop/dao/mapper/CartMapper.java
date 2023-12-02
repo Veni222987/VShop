@@ -27,10 +27,17 @@ public interface CartMapper {
     List<Cart> selectByUid(@Param("uid") String uid);
 
     /**
-     * 清空购物车
+     * 删除某人购物车中的部分商品
      *
-     * @param uid
+     * @param uid      用户id
+     * @param goodsIds 商品id列表
      */
-    @Delete("DELETE FROM `cart` WHERE `uid` = #{uid}")
-    void deleteByUid(@Param("uid") String uid);
+    @Delete("<script>" +
+            "DELETE FROM `cart` WHERE `uid` = #{uid} AND `goods_id` IN " +
+            "<foreach collection='goodsIds' item='goodsId' open='(' separator=',' close=')'>" +
+            "#{goodsId}" +
+            "</foreach>" +
+            "</script>")
+    void deleteCartGoods(@Param("uid") String uid, @Param("goodsIds") List<String> goodsIds);
+
 }

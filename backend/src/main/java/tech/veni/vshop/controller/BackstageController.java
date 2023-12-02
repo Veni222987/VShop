@@ -1,19 +1,26 @@
 package tech.veni.vshop.controller;
 
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tech.veni.vshop.dao.Goods;
+import tech.veni.vshop.service.BackstageService;
 import tech.veni.vshop.vo.BaseRes;
 
 @RestController
 @RequestMapping("/api/backstage")
 public class BackstageController {
+    @Autowired
+    BackstageService backstageService;
 
     /**
      * 新增商品
      */
     @PostMapping("/goods/add")
-    public BaseRes addGoods() {
+    public BaseRes addGoods(@RequestBody Goods goods) {
         BaseRes res = new BaseRes();
-        // TODO 新增商品
+        backstageService.addGoods(goods);
+        res.setCode(200);
         return res;
     }
 
@@ -21,9 +28,10 @@ public class BackstageController {
      * 修改商品
      */
     @PostMapping("/goods/update")
-    public BaseRes updateGoods() {
+    public BaseRes updateGoods(@RequestBody Goods goods) {
         BaseRes res = new BaseRes();
-        // TODO 修改商品
+        backstageService.updateGoods(goods);
+        res.setCode(200);
         return res;
     }
 
@@ -31,16 +39,23 @@ public class BackstageController {
      * 删除商品
      */
     @DeleteMapping("/goods/delete")
-    public BaseRes deleteGoods() {
+    public BaseRes deleteGoods(@Param("goodsId") String goodsId) {
         BaseRes res = new BaseRes();
-        // TODO 删除商品
+        backstageService.deleteGoods("goodsId");
         return res;
     }
 
-    @GetMapping("/goods/list")
-    public BaseRes listGoods() {
+    @GetMapping("/goods/list/{sid}")
+    public BaseRes listGoods(@PathVariable("sid") String sid) {
         BaseRes res = new BaseRes();
-        // TODO 商品列表
+        var data = backstageService.listGoods(sid);
+        if (data == null) {
+            res.setCode(500);
+            res.setMsg("获取商品失败");
+            return res;
+        }
+        res.setCode(200);
+        res.setData(data);
         return res;
     }
 
@@ -48,9 +63,16 @@ public class BackstageController {
      * 查看商铺销售数据
      */
     @GetMapping("/shop/sales")
-    public BaseRes shopSales() {
+    public BaseRes shopSales(@Param("sid") String sid) {
         BaseRes res = new BaseRes();
-        // TODO 查看商铺销售数据
+        var data = backstageService.listOrder(sid);
+        if (data == null) {
+            res.setCode(500);
+            res.setMsg("获取商铺销售数据失败");
+            return res;
+        }
+        res.setCode(200);
+        res.setData(data);
         return res;
     }
 
@@ -60,7 +82,14 @@ public class BackstageController {
     @GetMapping("/goods/sales")
     public BaseRes goodsSales() {
         BaseRes res = new BaseRes();
-        // TODO 查看商品销售数据
+        var data = backstageService.listGoodsOrder("goodsId");
+        if (data == null) {
+            res.setCode(500);
+            res.setMsg("获取商品销售数据失败");
+            return res;
+        }
+        res.setCode(200);
+        res.setData(data);
         return res;
     }
 }

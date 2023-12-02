@@ -1,12 +1,10 @@
 package tech.veni.vshop;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
+import tech.veni.vshop.dao.mapper.GoodsMapper;
 import tech.veni.vshop.dao.mapper.UserMapper;
-
-import java.util.HashMap;
 
 @SpringBootTest
 public class VshopApplicationTests {
@@ -14,6 +12,9 @@ public class VshopApplicationTests {
     @Autowired
     UserMapper userMapper;
 
+
+    @Autowired
+    GoodsMapper goodsMapper;
 
     @Autowired
     RedisTemplate<String, Object> redisTemplate;
@@ -31,13 +32,10 @@ public class VshopApplicationTests {
 //        System.out.println(redisTemplate.opsForValue().get("hellotest"));
 //    }
 
-    @Test
-    public void Test() {
-        HashMap<Integer, Integer> map = new HashMap<>();
-        map.put(3, 0);
-        map.put(4, 2);
-        map.put(2, 1);
-        System.out.println(map);
-    }
+//    @Test
+//    public void Test() {
+//        List<Res2Goods> res = goodsMapper.selectByPage(0, 5);
+//        System.out.println(res);
+//    }
 
 }

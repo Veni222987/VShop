@@ -3,6 +3,7 @@ package tech.veni.vshop.dao.mapper;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import tech.veni.vshop.dao.Shop;
 
 @Mapper
@@ -15,5 +16,11 @@ public interface ShopMapper {
      */
     @Insert("INSERT INTO `shop` (id,sid,name,email,password,create_time) "
             + " VALUES (#{shop.id}, #{shop.sid}, #{shop.name}, #{shop.email}, #{shop.password}, #{shop.createTime}")
-    void insertShop(@Param("shop") Shop shop);
+    void insert(@Param("shop") Shop shop);
+
+    /**
+     * 根据email查询店铺
+     */
+    @Select("SELECT * FROM `shop` WHERE `email` = #{email}")
+    Shop selectByEmail(@Param("email") String email);
 }
