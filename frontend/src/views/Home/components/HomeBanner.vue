@@ -1,12 +1,12 @@
 <script setup>
-import {onMounted, ref} from "vue";
-import {getHomBannerApi} from "@/apis/home";
-const bannerList=ref([]);
-const getBanner=async ()=>{
+import { onMounted, ref } from "vue";
+import { getHomBannerApi } from "@/apis/home";
+const bannerList = ref([]);
+const getBanner = async () => {
   const banner = await getHomBannerApi();
-  bannerList.value=banner.result;
+  bannerList.value = banner.data;
 }
-onMounted(()=>getBanner())
+onMounted(() => getBanner())
 </script>
 <template>
   <div class="home-banner">
@@ -22,10 +22,10 @@ onMounted(()=>getBanner())
 .home-banner {
   width: 1240px;
   height: 500px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 98;
+  // position: absolute;
+  // left: 0;
+  // top: 0;
+  // z-index: 98;
 
   img {
     width: 100%;

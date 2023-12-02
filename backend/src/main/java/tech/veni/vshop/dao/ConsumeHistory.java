@@ -10,14 +10,12 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConsumeHistory {
-    Long id;
-    String oid;
+    Integer id;
+    String orderId;
     String uid;
-    String itemId;
-    Double sum;
+    String goodsId;
     Integer count;
-    String recipient;
-    String address;
-    String phoneNumber;
+    Double sum;
+    Integer addressId;
     Timestamp createTime;
 }

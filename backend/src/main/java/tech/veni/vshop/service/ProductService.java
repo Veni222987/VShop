@@ -1,6 +1,5 @@
 package tech.veni.vshop.service;
 
-import tech.veni.vshop.dao.Product;
 import tech.veni.vshop.vo.Req4CreateProduct;
 import tech.veni.vshop.vo.Res2ProductDetail;
 

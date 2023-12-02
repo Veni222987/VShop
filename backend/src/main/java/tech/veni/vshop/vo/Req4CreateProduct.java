@@ -3,7 +3,7 @@ package tech.veni.vshop.vo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tech.veni.vshop.dao.Item;
+import tech.veni.vshop.dao.Goods;
 
 import java.util.List;
 
@@ -19,5 +19,5 @@ public class Req4CreateProduct {
     private String category;
     private Double price;
     private String attributes;
-    List<Item> items;
+    List<Goods> items;
 }

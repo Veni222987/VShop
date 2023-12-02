@@ -13,8 +13,8 @@ public interface CartMapper {
      *
      * @param cart
      */
-    @Insert("INSERT INTO `cart` (`id`, `uid`, `item_id`, `count`, `sum`)"
-            + " VALUES (#{cart.id}, #{cart.uid}, #{cart.itemId}, #{cart.count}, #{cart.sum})")
+    @Insert("INSERT INTO `cart` (`id`, `uid`, `goods_id`, `count`, `sum`)"
+            + " VALUES (#{cart.id}, #{cart.uid}, #{cart.goodsId}, #{cart.count}, #{cart.sum})")
     void insert(@Param("cart") Cart cart);
 
     /**
@@ -27,7 +27,7 @@ public interface CartMapper {
     List<Cart> selectByUid(@Param("uid") String uid);
 
     /**
-     * 删除购物车
+     * 清空购物车
      *
      * @param uid
      */

@@ -9,13 +9,9 @@ import java.sql.Timestamp;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Item {
-    Long id;
-    String pid;
-    String cover;
-    String attributes;
-    Double price;
-    Integer stock;
+public class WatchHistory {
+    Integer id;
+    String uid;
+    String goodsId;
     Timestamp createTime;
-    Timestamp updateTime;
 }

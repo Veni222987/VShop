@@ -4,19 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Order {
-    String oid;
+public class Address {
+    Integer id;
     String uid;
-    String itemId;
-    Double sum;
-    Integer count;
-    String recipient;
+    String addressName;
     String address;
+    String receiver;
     String phoneNumber;
-    Timestamp createTime;
+    String email;
 }

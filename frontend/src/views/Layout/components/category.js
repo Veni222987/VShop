@@ -9,7 +9,7 @@ export const useCategoryStore = defineStore('category', () => {
     //获取导航数据方法
     const getCategoryData=async ()=>{
         const res=await getCategory()
-        categoryList.value=res.result
+        categoryList.value=res.data
     }
     return{
         categoryList,

@@ -1,7 +1,6 @@
 package tech.veni.vshop.service;
 
 import tech.veni.vshop.dao.ConsumeHistory;
-import tech.veni.vshop.dao.Order;
 import tech.veni.vshop.vo.Res2Cart;
 import tech.veni.vshop.vo.Res2Order;
 

@@ -14,7 +14,7 @@ export function useCategory() {
 //id=route.params.id 意思是形参为id，默认值是route.params.id
     const getCategory=async (id=route.params.id)=>{
         const res=await getCategoryApi(id);
-        categoryData.value=res.result;
+        categoryData.value=res.data;
     }
     onMounted(()=>getCategory())
     //解决路由缓存问题方案2：利用钩子函数，路由参数变化的时候，可以把分类数据接口重新发送

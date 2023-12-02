@@ -37,7 +37,7 @@ public class UserController {
      * 登录接口
      */
     @GetMapping("/login")
-    public HashMap<String, Object> login(@RequestParam("phoneNumber") String phoneNumber,
+    public HashMap<String, Object> login(@RequestParam("account") String phoneNumber,
                                          @RequestParam("password") String password) {
         HashMap<String, Object> data = new HashMap<>();
         Req4Login req4Login = new Req4Login(null, phoneNumber, password);

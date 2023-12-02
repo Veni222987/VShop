@@ -7,10 +7,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cart {
+
+public class Shop {
     Integer id;
-    String uid;
-    String goodsId;
-    Integer count;
-    Double sum;
+    String sid;
+    String name;
+    String email;
+    String password;
+    String createTime;
 }

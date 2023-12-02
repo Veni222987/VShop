@@ -3,10 +3,7 @@ import request from '@/utils/http'
 //获取商品详情数据
 export const getDetailApi=(id)=>{
     return request({
-        url:'goods',
-        params:{
-            id
-        }
+        url:`/product/detail/${id}`,
     })
 }
 /**

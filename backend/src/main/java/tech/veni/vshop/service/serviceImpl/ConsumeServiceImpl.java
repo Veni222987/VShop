@@ -5,12 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import tech.veni.vshop.dao.Cart;
 import tech.veni.vshop.dao.ConsumeHistory;
-import tech.veni.vshop.dao.Item;
-import tech.veni.vshop.dao.Order;
+import tech.veni.vshop.dao.Goods;
 import tech.veni.vshop.dao.mapper.CartMapper;
 import tech.veni.vshop.dao.mapper.ConsumeHistoryMapper;
-import tech.veni.vshop.dao.mapper.ItemMapper;
-import tech.veni.vshop.dao.mapper.OrderMapper;
+import tech.veni.vshop.dao.mapper.GoodsMapper;
 import tech.veni.vshop.service.ConsumeService;
 import tech.veni.vshop.utils.TimeUtils;
 import tech.veni.vshop.vo.Res2Cart;
@@ -26,7 +24,7 @@ import java.util.List;
 @Service
 public class ConsumeServiceImpl implements ConsumeService {
     @Autowired
-    ItemMapper itemMapper;
+    GoodsMapper itemMapper;
 
     @Autowired
     CartMapper cartMapper;
@@ -85,7 +83,7 @@ public class ConsumeServiceImpl implements ConsumeService {
             String itemId = cart.getItemId();
             Integer count = cart.getCount();
             //获取某人的购物车中的某个商品
-            Item item = itemMapper.selectById(itemId);
+            Goods item = itemMapper.selectById(itemId);
             ShortItem shortItem = itemMapper.selectShortItemById(Integer.valueOf(itemId));
 //            shortItem.setCount(count);
             res.getItems().add(shortItem);

@@ -1,9 +1,21 @@
 import httpInstance from "@/utils/http";
 export function getCategoryApi(id){
+    var map={
+        "1":"居家",
+        "2":"美食",
+        "3":"服饰",
+        "4":"母婴",
+        "5":"个护",
+        "6":"严选",
+        "7":"数码",
+        "8":"运动",
+        "9":"其他"
+    }
+    var category=map[id]
     return httpInstance({
-        url:'/category',
+        url:'/product/list/category',
         params:{
-            id
+            category
         }
     })
 }

@@ -16,14 +16,14 @@ const typeMap={
 const title=computed(()=>typeMap[props.hotType])
 
 const hotList=ref([]);
-const route=useRoute();
-const getHotGoods=async ()=>{
-  const res=await fetchHotGoodsAPI({
-    id:route.params.id,
-    type:props.hotType
-  });
-  hotList.value=res.result;
-}
+// const route=useRoute();
+// const getHotGoods=async ()=>{
+//   const res=await fetchHotGoodsAPI({
+//     id:route.params.id,
+//     type:props.hotType
+//   });
+//   hotList.value=res.result;
+// }
 onMounted(()=>getHotGoods())
 </script>
 

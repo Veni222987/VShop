@@ -3,10 +3,8 @@ package tech.veni.vshop.service.serviceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tech.veni.vshop.dao.Item;
-import tech.veni.vshop.dao.Product;
-import tech.veni.vshop.dao.mapper.ItemMapper;
-import tech.veni.vshop.dao.mapper.ProductMapper;
+import tech.veni.vshop.dao.Goods;
+import tech.veni.vshop.dao.mapper.GoodsMapper;
 import tech.veni.vshop.service.ProductService;
 import tech.veni.vshop.utils.IdUtils;
 import tech.veni.vshop.vo.Req4CreateProduct;
@@ -22,7 +20,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductMapper productMapper;
 
     @Autowired
-    private ItemMapper itemMapper;
+    private GoodsMapper itemMapper;
 
     @Transactional
     @Override
@@ -43,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
         );
         productMapper.insert(product);
         //将pid赋值给items
-        for (Item item : req4CreateProduct.getItems()) {
+        for (Goods item : req4CreateProduct.getItems()) {
             item.setPid(product.getPid());
             Timestamp now = new Timestamp(System.currentTimeMillis());
             item.setCreateTime(now);
@@ -67,7 +65,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Res2ProductDetail getProductDetail(String pid) {
         Product product = productMapper.getProductByPid(pid);
-        List<Item> items = itemMapper.listItemsByPid(pid);
+        List<Goods> items = itemMapper.listItemsByPid(pid);
         Res2ProductDetail res2ProductDetail = new Res2ProductDetail(
                 product.getPid(),
                 product.getTitle(),

@@ -7,7 +7,7 @@ export function useBanner() {
         const banner = await getHomBannerApi({
             distributionSite:'2'
         });
-        bannerList.value=banner.result;
+        bannerList.value=banner.data;
     }
     onMounted(()=>getBanner())
     return{
