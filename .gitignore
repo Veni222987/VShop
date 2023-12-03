@@ -44,3 +44,6 @@ build/
 
 ### zipfile ###
 *.zip
+
+### config ###
+backend/src/main/resources/application.properties
