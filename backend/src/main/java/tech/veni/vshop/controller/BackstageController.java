@@ -27,7 +27,7 @@ public class BackstageController {
     /**
      * 修改商品
      */
-    @PostMapping("/goods/update")
+    @PutMapping("/goods/update")
     public BaseRes updateGoods(@RequestBody Goods goods) {
         BaseRes res = new BaseRes();
         backstageService.updateGoods(goods);
@@ -41,7 +41,8 @@ public class BackstageController {
     @DeleteMapping("/goods/delete")
     public BaseRes deleteGoods(@Param("goodsId") String goodsId) {
         BaseRes res = new BaseRes();
-        backstageService.deleteGoods("goodsId");
+        backstageService.deleteGoods(goodsId);
+        res.setCode(200);
         return res;
     }
 
@@ -62,8 +63,8 @@ public class BackstageController {
     /**
      * 查看商铺销售数据
      */
-    @GetMapping("/shop/sales")
-    public BaseRes shopSales(@Param("sid") String sid) {
+    @GetMapping("/shop/sales/{sid}")
+    public BaseRes shopSales(@PathVariable("sid") String sid) {
         BaseRes res = new BaseRes();
         var data = backstageService.listOrder(sid);
         if (data == null) {
@@ -79,10 +80,10 @@ public class BackstageController {
     /**
      * 查看商品销售数据
      */
-    @GetMapping("/goods/sales")
-    public BaseRes goodsSales() {
+    @GetMapping("/goods/sales/{goodsId}")
+    public BaseRes goodsSales(@PathVariable("goodsId") String goodsId) {
         BaseRes res = new BaseRes();
-        var data = backstageService.listGoodsOrder("goodsId");
+        var data = backstageService.listGoodsOrder(goodsId);
         if (data == null) {
             res.setCode(500);
             res.setMsg("获取商品销售数据失败");

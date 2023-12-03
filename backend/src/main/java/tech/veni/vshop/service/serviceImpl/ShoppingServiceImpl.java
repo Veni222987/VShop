@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import tech.veni.vshop.dao.Address;
 import tech.veni.vshop.dao.Cart;
 import tech.veni.vshop.dao.ConsumeHistory;
 import tech.veni.vshop.dao.WatchHistory;
@@ -36,6 +37,9 @@ public class ShoppingServiceImpl implements ShoppingService {
 
     @Autowired
     UserMapper userMapper;
+
+    @Autowired
+    AddressMapper addressMapper;
 
     @Override
     public List<Res2Goods> listGoodsHome(Integer page, Integer size) {
@@ -86,7 +90,7 @@ public class ShoppingServiceImpl implements ShoppingService {
     public void payAndSendEmail(List<ConsumeHistory> consumeHistoryList) {
         //发送邮件
         // 查找用户信息
-        var user = userMapper.selectById(consumeHistoryList.get(0).getUid());
+        var user = userMapper.selectByUid(consumeHistoryList.get(0).getUid());
         sendEmail(user.getEmail(), user.getUsername(), consumeHistoryList.get(0).getOrderId());
         //插入消费记录
         for (ConsumeHistory consumeHistory : consumeHistoryList) {
@@ -101,6 +105,7 @@ public class ShoppingServiceImpl implements ShoppingService {
 
     @Override
     public void addGoodsHistory(WatchHistory watchHistory) {
+        watchHistory.setCreateTime(new Timestamp(System.currentTimeMillis()));
         watchHistoryMapper.insert(watchHistory);
     }
 
@@ -109,6 +114,15 @@ public class ShoppingServiceImpl implements ShoppingService {
         return watchHistoryMapper.selectByUid(uid);
     }
 
+    @Override
+    public void addAddress(Address address) {
+        addressMapper.insertAddress(address);
+    }
+
+    @Override
+    public List<Address> listAddress(String uid) {
+        return addressMapper.selectAddressByUid(uid);
+    }
 
     public void sendEmail(String email, String name, String orderId) {
         SimpleMailMessage message = new SimpleMailMessage();

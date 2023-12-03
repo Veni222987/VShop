@@ -29,11 +29,11 @@ public interface ConsumeHistoryMapper {
     List<ConsumeHistory> listByUid(@Param("uid") String uid);
 
     /**
-     * 获取某个商家的全部订单
+     * 多表联查，根据goodsId查到sid并嵌入where条件
      *
      * @param sid
      */
-    @Select("SELECT * FROM `consume_history` WHERE `sid` = #{sid}")
+    @Select("SELECT * FROM `consume_history` WHERE consume_history.`goods_id` IN (SELECT `goods_id` FROM `goods` WHERE `shop_id` = #{sid})")
     List<ConsumeHistory> listBySid(@Param("sid") String sid);
 
     /**

@@ -20,4 +20,5 @@ public class Goods {
     Double price;
     Integer stock;
     Timestamp createTime;
+    Timestamp updateTime;
 }

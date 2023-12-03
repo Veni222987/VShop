@@ -1,5 +1,6 @@
 package tech.veni.vshop.service;
 
+import tech.veni.vshop.dao.Address;
 import tech.veni.vshop.dao.Cart;
 import tech.veni.vshop.dao.ConsumeHistory;
 import tech.veni.vshop.dao.WatchHistory;
@@ -55,6 +56,20 @@ public interface ShoppingService {
      * 付款并发送邮件
      */
     void payAndSendEmail(List<ConsumeHistory> consumeHistoryList);
+
+    /**
+     * 添加收货地址
+     *
+     * @param address 收货地址
+     */
+    void addAddress(Address address);
+
+    /**
+     * 查询某人所有收货地址
+     *
+     * @param uid 用户id
+     */
+    List<Address> listAddress(String uid);
 
     /**
      * 查看消费记录

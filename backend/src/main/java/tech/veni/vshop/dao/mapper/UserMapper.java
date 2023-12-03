@@ -28,7 +28,7 @@ public interface UserMapper {
     /**
      * 根据id查询用户
      */
-    @Select("SELECT * FROM `user` WHERE `id` = #{id}")
-    User selectById(@Param("id") String id);
+    @Select("SELECT * FROM `user` WHERE `uid` = #{uid}")
+    User selectByUid(@Param("uid") String uid);
 
 }

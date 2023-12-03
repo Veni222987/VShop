@@ -7,7 +7,9 @@ import tech.veni.vshop.dao.Goods;
 import tech.veni.vshop.dao.mapper.ConsumeHistoryMapper;
 import tech.veni.vshop.dao.mapper.GoodsMapper;
 import tech.veni.vshop.service.BackstageService;
+import tech.veni.vshop.utils.IdUtils;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -20,6 +22,9 @@ public class BackstageServiceImpl implements BackstageService {
 
     @Override
     public void addGoods(Goods goods) {
+        goods.setGoodsId(IdUtils.generateGoodsId().toString());
+        goods.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        goods.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         goodsMapper.insert(goods);
     }
 
