@@ -30,6 +30,7 @@ public class AccountServiceImpl implements AccountService {
         // 生成用户
         user.setUid(IdUtils.generateUid().toString());
         user.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        user.setPassword(PasswordUtil.encryptPassword(user.getPassword()));
         userMapper.insert(user);
         return user.getUid();
     }
@@ -56,6 +57,7 @@ public class AccountServiceImpl implements AccountService {
         // 生成商家
         shop.setSid(IdUtils.generateUid().toString());
         shop.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        shop.setPassword(PasswordUtil.encryptPassword(shop.getPassword()));
         shopMapper.insert(shop);
         return shop.getSid();
     }

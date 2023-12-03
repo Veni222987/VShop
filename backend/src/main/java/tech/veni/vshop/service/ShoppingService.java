@@ -43,12 +43,18 @@ public interface ShoppingService {
     List<Cart> listCartGoods(String uid);
 
     /**
-     * 删除购物车商品
+     * 购物车商品结算
      *
      * @param uid      用户id
-     * @param goodsIds 商品ids
+     * @param cartList 商品ids
      */
-    void deleteCartGoods(String uid, List<String> goodsIds);
+    List<ConsumeHistory> settleAndCreateOrder(String uid, List<Cart> cartList, Integer addressId);
+
+
+    /**
+     * 付款并发送邮件
+     */
+    void payAndSendEmail(List<ConsumeHistory> consumeHistoryList);
 
     /**
      * 查看消费记录

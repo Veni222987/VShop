@@ -4,12 +4,14 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tech.veni.vshop.dao.Cart;
+import tech.veni.vshop.dao.ConsumeHistory;
 import tech.veni.vshop.dao.WatchHistory;
 import tech.veni.vshop.service.ShoppingService;
 import tech.veni.vshop.vo.BaseRes;
 import tech.veni.vshop.vo.Req4Settle;
 
 import java.net.URLDecoder;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/shopping")
@@ -111,8 +113,9 @@ public class ShoppingController {
     @GetMapping("/settle")
     public BaseRes settle(@RequestBody Req4Settle req4Settle) {
         BaseRes res = new BaseRes();
-        shoppingService.deleteCartGoods(req4Settle.getUid(), req4Settle.getGoodsIds());
+        var data = shoppingService.settleAndCreateOrder(req4Settle.getUid(), req4Settle.getCarts(), req4Settle.getAddressId());
         res.setCode(200);
+        res.setData(data);
         return res;
     }
 
@@ -120,9 +123,10 @@ public class ShoppingController {
      * 付款并发送邮件
      */
     @GetMapping("/pay")
-    public BaseRes pay() {
+    public BaseRes pay(@RequestBody List<ConsumeHistory> consumeHistories) {
         BaseRes res = new BaseRes();
-        // TODO 付款
+        shoppingService.payAndSendEmail(consumeHistories);
+        res.setCode(200);
         return res;
     }
 

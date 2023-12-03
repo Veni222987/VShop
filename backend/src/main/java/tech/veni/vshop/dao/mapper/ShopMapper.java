@@ -15,7 +15,7 @@ public interface ShopMapper {
      * @param shop
      */
     @Insert("INSERT INTO `shop` (id,sid,name,email,password,create_time) "
-            + " VALUES (#{shop.id}, #{shop.sid}, #{shop.name}, #{shop.email}, #{shop.password}, #{shop.createTime}")
+            + " VALUES (#{shop.id}, #{shop.sid}, #{shop.name}, #{shop.email}, #{shop.password}, #{shop.createTime})")
     void insert(@Param("shop") Shop shop);
 
     /**

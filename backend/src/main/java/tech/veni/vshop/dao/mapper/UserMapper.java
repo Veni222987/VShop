@@ -25,4 +25,10 @@ public interface UserMapper {
     @Select("SELECT * FROM `user` WHERE `email` = #{email}")
     User selectByEmail(@Param("email") String email);
 
+    /**
+     * 根据id查询用户
+     */
+    @Select("SELECT * FROM `user` WHERE `id` = #{id}")
+    User selectById(@Param("id") String id);
+
 }
