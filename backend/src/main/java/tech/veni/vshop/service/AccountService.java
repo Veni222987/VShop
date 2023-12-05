@@ -18,7 +18,7 @@ public interface AccountService {
      * @param password 密码
      * @return token
      */
-    String userLogin(String email, String password);
+    User userLogin(String email, String password);
 
     /**
      * 商家注册
@@ -33,6 +33,6 @@ public interface AccountService {
      * @param email    邮箱
      * @param password 密码
      */
-    String shopLogin(String email, String password);
+    Shop shopLogin(String email, String password);
 
 }

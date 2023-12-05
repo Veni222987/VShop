@@ -43,18 +43,18 @@ public class AccountController {
     @PostMapping("/user/login")
     public BaseRes login(@RequestBody Req4Login req4Login) {
         BaseRes res = new BaseRes();
-        String uid = accountService.userLogin(req4Login.getEmail(), req4Login.getPassword());
-        if (uid == null) {
+        User user = accountService.userLogin(req4Login.getEmail(), req4Login.getPassword());
+        if (user == null) {
             res.setCode(400);
             res.setMsg("账号不存在");
             return res;
-        } else if (uid.equals("密码错误")) {
+        } else if (user.getId() == -1) {
             res.setCode(400);
             res.setMsg("密码错误");
             return res;
         } else {
             res.setCode(200);
-            res.setData(uid);
+            res.setData(user);
             return res;
         }
     }
@@ -84,18 +84,18 @@ public class AccountController {
     @PostMapping("/seller/login")
     public BaseRes shopLogin(@RequestBody Req4Login req4Login) {
         BaseRes res = new BaseRes();
-        String sid = accountService.shopLogin(req4Login.getEmail(), req4Login.getPassword());
-        if (sid == null) {
+        Shop shop = accountService.shopLogin(req4Login.getEmail(), req4Login.getPassword());
+        if (shop == null) {
             res.setCode(400);
             res.setMsg("账号不存在");
             return res;
-        } else if (sid.equals("密码错误")) {
+        } else if (shop.getId() == -1) {
             res.setCode(400);
             res.setMsg("密码错误");
             return res;
         } else {
             res.setCode(200);
-            res.setData(sid);
+            res.setData(shop);
             return res;
         }
     }

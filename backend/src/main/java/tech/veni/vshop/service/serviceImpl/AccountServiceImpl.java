@@ -36,15 +36,15 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public String userLogin(String email, String password) {
+    public User userLogin(String email, String password) {
         User u = userMapper.selectByEmail(email);
         if (u == null) {
             return null;
         }
         if (PasswordUtil.verifyPassword(password, u.getPassword())) {
-            return u.getUid();
+            return u;
         } else
-            return "密码错误";
+            return new User(-1, null, null, null, "密码错误", null, null, null);
     }
 
     @Override
@@ -63,15 +63,15 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public String shopLogin(String email, String password) {
+    public Shop shopLogin(String email, String password) {
         Shop s = shopMapper.selectByEmail(email);
         if (s == null) {
             return null;
         }
         if (PasswordUtil.verifyPassword(password, s.getPassword())) {
-            return s.getSid();
+            return s;
         } else
-            return "密码错误";
+            return new Shop(-1, null, null, null, null, null);
     }
 
 }
