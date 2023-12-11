@@ -1,10 +1,8 @@
 package tech.veni.vshop.dao.mapper;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import tech.veni.vshop.dao.ConsumeHistory;
+import tech.veni.vshop.vo.Res2ShopData;
 
 import java.util.List;
 
@@ -33,14 +31,28 @@ public interface ConsumeHistoryMapper {
      *
      * @param sid
      */
+    @Results({
+            @Result(property = "id", column = "id"),
+            @Result(property = "goods", column = "goods_id", one = @One(select = "tech.veni.vshop.dao.mapper.GoodsMapper.selectOneByGoodsId")),
+            @Result(property = "count", column = "count"),
+            @Result(property = "sum", column = "sum"),
+            @Result(property = "createTime", column = "create_time")
+    })
     @Select("SELECT * FROM `consume_history` WHERE consume_history.`goods_id` IN (SELECT `goods_id` FROM `goods` WHERE `shop_id` = #{sid})")
-    List<ConsumeHistory> listBySid(@Param("sid") String sid);
+    List<Res2ShopData> listBySid(@Param("sid") String sid);
 
     /**
      * 获取某个商品的所有订单
      *
      * @param goodsId
      */
+    @Results({
+            @Result(property = "id", column = "id"),
+            @Result(property = "goods", column = "goods_id", one = @One(select = "tech.veni.vshop.dao.mapper.GoodsMapper.selectOneByGoodsId")),
+            @Result(property = "count", column = "count"),
+            @Result(property = "sum", column = "sum"),
+            @Result(property = "createTime", column = "create_time")
+    })
     @Select("SELECT * FROM `consume_history` WHERE `goods_id` = #{goodsId}")
-    List<ConsumeHistory> listByGoodsId(@Param("goodsId") String goodsId);
+    List<Res2ShopData> listByGoodsId(@Param("goodsId") String goodsId);
 }

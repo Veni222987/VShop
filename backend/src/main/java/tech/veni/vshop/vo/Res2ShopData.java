@@ -5,13 +5,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import tech.veni.vshop.dao.Goods;
 
+import java.sql.Timestamp;
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class Res2Cart {
+public class Res2ShopData {
     Integer id;
-    String uid;
     Goods goods;
     Integer count;
     Double sum;
+    Timestamp createTime;
 }

@@ -11,6 +11,7 @@ import tech.veni.vshop.dao.WatchHistory;
 import tech.veni.vshop.dao.mapper.*;
 import tech.veni.vshop.service.ShoppingService;
 import tech.veni.vshop.utils.IdUtils;
+import tech.veni.vshop.vo.Res2Cart;
 import tech.veni.vshop.vo.Res2Goods;
 
 import java.sql.Timestamp;
@@ -62,8 +63,8 @@ public class ShoppingServiceImpl implements ShoppingService {
     }
 
     @Override
-    public List<Cart> listCartGoods(String uid) {
-        return cartMapper.selectByUid(uid);
+    public List<Res2Cart> listCartGoods(String uid) {
+        return cartMapper.listByUid(uid);
     }
 
     @Override

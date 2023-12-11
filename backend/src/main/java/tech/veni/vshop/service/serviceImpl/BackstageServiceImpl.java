@@ -2,12 +2,12 @@ package tech.veni.vshop.service.serviceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tech.veni.vshop.dao.ConsumeHistory;
 import tech.veni.vshop.dao.Goods;
 import tech.veni.vshop.dao.mapper.ConsumeHistoryMapper;
 import tech.veni.vshop.dao.mapper.GoodsMapper;
 import tech.veni.vshop.service.BackstageService;
 import tech.veni.vshop.utils.IdUtils;
+import tech.veni.vshop.vo.Res2ShopData;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -44,12 +44,12 @@ public class BackstageServiceImpl implements BackstageService {
     }
 
     @Override
-    public List<ConsumeHistory> listOrder(String sid) {
+    public List<Res2ShopData> listOrder(String sid) {
         return consumeHistoryMapper.listBySid(sid);
     }
 
     @Override
-    public List<ConsumeHistory> listGoodsOrder(String goodsId) {
+    public List<Res2ShopData> listGoodsOrder(String goodsId) {
         return consumeHistoryMapper.listByGoodsId(goodsId);
     }
 }

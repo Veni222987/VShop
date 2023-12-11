@@ -43,6 +43,14 @@ public interface GoodsMapper {
     List<Goods> selectBySid(@Param("sid") String sid);
 
     /**
+     * 根据id查询商品
+     *
+     * @param goods_id 商品id
+     */
+    @Select("SELECT * FROM `goods` WHERE `goods_id` = #{goods_id}")
+    Goods selectOneByGoodsId(@Param("goods_id") String goods_id);
+
+    /**
      * 分页查询最新商品
      *
      * @param offset 偏移量

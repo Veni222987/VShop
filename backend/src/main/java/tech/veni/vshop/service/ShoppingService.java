@@ -4,6 +4,7 @@ import tech.veni.vshop.dao.Address;
 import tech.veni.vshop.dao.Cart;
 import tech.veni.vshop.dao.ConsumeHistory;
 import tech.veni.vshop.dao.WatchHistory;
+import tech.veni.vshop.vo.Res2Cart;
 import tech.veni.vshop.vo.Res2Goods;
 
 import java.util.List;
@@ -41,7 +42,7 @@ public interface ShoppingService {
      *
      * @param uid 用户id
      */
-    List<Cart> listCartGoods(String uid);
+    List<Res2Cart> listCartGoods(String uid);
 
     /**
      * 购物车商品结算

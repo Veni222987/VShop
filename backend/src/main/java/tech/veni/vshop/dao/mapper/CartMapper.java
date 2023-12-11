@@ -2,6 +2,7 @@ package tech.veni.vshop.dao.mapper;
 
 import org.apache.ibatis.annotations.*;
 import tech.veni.vshop.dao.Cart;
+import tech.veni.vshop.vo.Res2Cart;
 
 import java.util.List;
 
@@ -21,10 +22,17 @@ public interface CartMapper {
      * 获取某人的购物车
      *
      * @param uid
-     * @return List<Cart> 购物车物品列表
+     * @return List<Res2Cart> 购物车物品列表
      */
+    @Results({
+            @Result(property = "id", column = "id"),
+            @Result(property = "uid", column = "uid"),
+            @Result(property = "count", column = "count"),
+            @Result(property = "sum", column = "sum"),
+            @Result(property = "goods", column = "goods_id", one = @One(select = "tech.veni.vshop.dao.mapper.GoodsMapper.selectOneByGoodsId"))
+    })
     @Select("SELECT * FROM `cart` WHERE `uid` = #{uid}")
-    List<Cart> selectByUid(@Param("uid") String uid);
+    List<Res2Cart> listByUid(@Param("uid") String uid);
 
     /**
      * 删除某人购物车中的部分商品

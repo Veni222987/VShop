@@ -1,8 +1,8 @@
 package tech.veni.vshop.service;
 
 
-import tech.veni.vshop.dao.ConsumeHistory;
 import tech.veni.vshop.dao.Goods;
+import tech.veni.vshop.vo.Res2ShopData;
 
 import java.util.List;
 
@@ -41,13 +41,13 @@ public interface BackstageService {
      *
      * @param sid
      */
-    List<ConsumeHistory> listOrder(String sid);
+    List<Res2ShopData> listOrder(String sid);
 
     /**
      * 查看某一件商品的销售情况
      *
      * @param goodsId
      */
-    List<ConsumeHistory> listGoodsOrder(String goodsId);
+    List<Res2ShopData> listGoodsOrder(String goodsId);
 
 }
