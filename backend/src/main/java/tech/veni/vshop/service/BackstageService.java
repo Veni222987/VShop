@@ -39,14 +39,14 @@ public interface BackstageService {
     /**
      * 获取商家的所有订单
      *
-     * @param sid 商家id
+     * @param sid
      */
     List<Res2ShopData> listOrder(String sid);
 
     /**
      * 查看某一件商品的销售情况
      *
-     * @param goodsId 商品id
+     * @param goodsId
      */
     List<Res2ShopData> listGoodsOrder(String goodsId);
 

@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import tech.veni.vshop.dao.Address;
-import tech.veni.vshop.dao.Cart;
-import tech.veni.vshop.dao.ConsumeHistory;
-import tech.veni.vshop.dao.WatchHistory;
+import tech.veni.vshop.dao.*;
 import tech.veni.vshop.dao.mapper.*;
 import tech.veni.vshop.service.ShoppingService;
 import tech.veni.vshop.utils.IdUtils;
@@ -55,8 +52,8 @@ public class ShoppingServiceImpl implements ShoppingService {
     }
 
     @Override
-    public Res2Goods getGoodsDetail(String id) {
-        return goodsMapper.selectByGoodsId(id);
+    public Goods getGoodsDetail(String id) {
+        return goodsMapper.selectOneByGoodsId(id);
     }
 
     @Override

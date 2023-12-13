@@ -12,6 +12,7 @@ import tech.veni.vshop.vo.BaseRes;
 import tech.veni.vshop.vo.Req4Settle;
 
 import java.net.URLDecoder;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -66,10 +67,10 @@ public class ShoppingController {
     /**
      * 获取商品详情，使用路由参数
      */
-    @GetMapping("/detail/{id}")
-    public BaseRes detail(@PathVariable("id") String id) {
+    @GetMapping("/detail/{goods_id}")
+    public BaseRes detail(@PathVariable("goods_id") String goods_id) {
         BaseRes res = new BaseRes();
-        var data = shoppingService.getGoodsDetail(id);
+        var data = shoppingService.getGoodsDetail(goods_id);
         if (data == null) {
             res.setCode(500);
             res.setMsg("获取商品详情失败");

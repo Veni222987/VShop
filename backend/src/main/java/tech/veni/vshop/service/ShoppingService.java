@@ -1,9 +1,6 @@
 package tech.veni.vshop.service;
 
-import tech.veni.vshop.dao.Address;
-import tech.veni.vshop.dao.Cart;
-import tech.veni.vshop.dao.ConsumeHistory;
-import tech.veni.vshop.dao.WatchHistory;
+import tech.veni.vshop.dao.*;
 import tech.veni.vshop.vo.Res2BrowseHistory;
 import tech.veni.vshop.vo.Res2Cart;
 import tech.veni.vshop.vo.Res2Goods;
@@ -30,7 +27,7 @@ public interface ShoppingService {
      *
      * @param id 商品id
      */
-    Res2Goods getGoodsDetail(String id);
+    Goods getGoodsDetail(String id);
 
     /**
      * 添加商品到购物车
