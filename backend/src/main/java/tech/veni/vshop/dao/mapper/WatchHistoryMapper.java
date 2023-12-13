@@ -1,10 +1,8 @@
 package tech.veni.vshop.dao.mapper;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import tech.veni.vshop.dao.WatchHistory;
+import tech.veni.vshop.vo.Res2BrowseHistory;
 
 import java.util.List;
 
@@ -27,4 +25,12 @@ public interface WatchHistoryMapper {
      */
     @Select("SELECT * FROM `watch_history` WHERE `uid` = #{uid}")
     List<WatchHistory> selectByUid(@Param("uid") String uid);
+
+    @Results({
+            @Result(property = "id", column = "id"),
+            @Result(property = "goods", column = "goods_id", one = @One(select = "tech.veni.vshop.dao.mapper.GoodsMapper.selectOneByGoodsId")),
+            @Result(property = "createTime", column = "create_time")
+    })
+    @Select("SELECT * FROM `watch_history` WHERE `uid` = #{uid}")
+    List<Res2BrowseHistory> selectByUid4Detail(@Param("uid") String uid);
 }

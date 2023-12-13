@@ -11,8 +11,10 @@ import tech.veni.vshop.dao.WatchHistory;
 import tech.veni.vshop.dao.mapper.*;
 import tech.veni.vshop.service.ShoppingService;
 import tech.veni.vshop.utils.IdUtils;
+import tech.veni.vshop.vo.Res2BrowseHistory;
 import tech.veni.vshop.vo.Res2Cart;
 import tech.veni.vshop.vo.Res2Goods;
+import tech.veni.vshop.vo.Res2ShopData;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -100,8 +102,8 @@ public class ShoppingServiceImpl implements ShoppingService {
     }
 
     @Override
-    public List<ConsumeHistory> listConsumeHistory(String uid) {
-        return consumeHistoryMapper.listByUid(uid);
+    public List<Res2ShopData> listConsumeHistory(String uid) {
+        return consumeHistoryMapper.listByUid4Order(uid);
     }
 
     @Override
@@ -111,8 +113,8 @@ public class ShoppingServiceImpl implements ShoppingService {
     }
 
     @Override
-    public List<WatchHistory> listGoodsHistory(String uid) {
-        return watchHistoryMapper.selectByUid(uid);
+    public List<Res2BrowseHistory> listGoodsHistory(String uid) {
+        return watchHistoryMapper.selectByUid4Detail(uid);
     }
 
     @Override

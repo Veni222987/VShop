@@ -55,4 +55,19 @@ public interface ConsumeHistoryMapper {
     })
     @Select("SELECT * FROM `consume_history` WHERE `goods_id` = #{goodsId}")
     List<Res2ShopData> listByGoodsId(@Param("goodsId") String goodsId);
+
+    /**
+     * 获取用户的所有订单
+     *
+     * @param uid 用户id
+     */
+    @Results({
+            @Result(property = "id", column = "id"),
+            @Result(property = "goods", column = "goods_id", one = @One(select = "tech.veni.vshop.dao.mapper.GoodsMapper.selectOneByGoodsId")),
+            @Result(property = "count", column = "count"),
+            @Result(property = "sum", column = "sum"),
+            @Result(property = "createTime", column = "create_time")
+    })
+    @Select("SELECT * FROM `consume_history` WHERE `uid` = #{uid}")
+    List<Res2ShopData> listByUid4Order(@Param("uid") String uid);
 }

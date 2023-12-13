@@ -4,8 +4,10 @@ import tech.veni.vshop.dao.Address;
 import tech.veni.vshop.dao.Cart;
 import tech.veni.vshop.dao.ConsumeHistory;
 import tech.veni.vshop.dao.WatchHistory;
+import tech.veni.vshop.vo.Res2BrowseHistory;
 import tech.veni.vshop.vo.Res2Cart;
 import tech.veni.vshop.vo.Res2Goods;
+import tech.veni.vshop.vo.Res2ShopData;
 
 import java.util.List;
 
@@ -77,7 +79,7 @@ public interface ShoppingService {
      *
      * @param uid 用户id
      */
-    List<ConsumeHistory> listConsumeHistory(String uid);
+    List<Res2ShopData> listConsumeHistory(String uid);
 
     /**
      * 添加浏览记录
@@ -91,5 +93,5 @@ public interface ShoppingService {
      *
      * @param uid 用户id
      */
-    List<WatchHistory> listGoodsHistory(String uid);
+    List<Res2BrowseHistory> listGoodsHistory(String uid);
 }
