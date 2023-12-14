@@ -30,6 +30,7 @@ a {
   text-decoration: none;
   color: #333;
   outline: none;
+  cursor: pointer;
 }
 i {
   font-style: normal;
@@ -50,10 +51,17 @@ img {
   max-width: 100%;
   max-height: 100%;
   vertical-align: middle;
-  background: #ebebeb url('@/assets/images/200.png') no-repeat center / contain;
 }
 ul {
   list-style: none;
+}
+
+button {
+    padding: 0;
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
 }
 
 #app {

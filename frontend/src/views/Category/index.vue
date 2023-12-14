@@ -1,12 +1,9 @@
 <script setup>
 import GoodsItem from "@/views/Home/components/GoodsItem.vue";
-import {useBanner} from "@/views/Category/composables/useBanner";
 import {useCategory} from "@/views/Category/composables/useCategory";
+import HomeBanner from "@/views/Home/components/HomeBanner.vue";
 //获取分类数据
 const {categoryData} = useCategory();
-//获取banner,解构数据
-const {bannerList} = useBanner();
-
 </script>
 
 <template>
@@ -20,13 +17,7 @@ const {bannerList} = useBanner();
         </el-breadcrumb>
       </div>
     <!-- 轮播图 -->
-      <div class="home-banner">
-        <el-carousel height="500px">
-          <el-carousel-item v-for="item in bannerList" :key="item.id">
-            <img :src="item.imgUrl" alt="">
-          </el-carousel-item>
-        </el-carousel>
-      </div>
+      <HomeBanner/>
       <!-- <div class="sub-list">
         <h3>全部分类</h3>
         <ul>
@@ -99,7 +90,7 @@ const {bannerList} = useBanner();
           }
 
           &:hover {
-            color: $xtxColor;
+            color: $themeColor;
           }
         }
       }
@@ -129,6 +120,7 @@ const {bannerList} = useBanner();
 
     .body {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-around;
       padding: 0 40px 30px;
     }

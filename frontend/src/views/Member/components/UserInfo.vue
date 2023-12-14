@@ -2,18 +2,27 @@
 import GoodsItem from '@/views/Home/components/GoodsItem.vue'
 import {useUserStore} from "@/stores/userStore";
 import {onMounted, ref} from 'vue'
-import {getLikeListAPI} from "@/apis/user";
+import {getHistoryApi} from "@/apis/shopping";
 
 const userStore = useUserStore()
-// 导入GoodsItem组件
-// 获取猜你喜欢列表
-const likeList = ref([])
-const getLikeList = async () => {
-  const res = await getLikeListAPI({ limit: 4 })
-  likeList.value = res.result
-}
+// 获取浏览历史列表
+const historyList = ref([])
 
-onMounted(() => getLikeList())
+const goodsList = ref([])
+const getHistoryList = async () => {
+  const uid = userStore.userInfo?.uid
+  const res = await getHistoryApi({uid})
+  historyList.value = res.data
+  console.log(historyList.value)
+  // 提取historyList中的goods信息并合并数组，goods不能为null
+  historyList.value.forEach(item => {
+    if (item.goods) {
+      goodsList.value.push(item.goods)
+    }
+  })
+  goodsList.value.reverse()
+}
+onMounted(() => getHistoryList())
 </script>
 
 <template>
@@ -25,28 +34,14 @@ onMounted(() => getLikeList())
       </div>
       <h4>{{ userStore.userInfo?.account }}</h4>
     </div>
-    <div class="item">
-      <a href="javascript:;">
-        <span class="iconfont icon-hy"></span>
-        <p>会员中心</p>
-      </a>
-      <a href="javascript:;">
-        <span class="iconfont icon-aq"></span>
-        <p>安全设置</p>
-      </a>
-      <a href="javascript:;">
-        <span class="iconfont icon-dw"></span>
-        <p>地址管理</p>
-      </a>
-    </div>
   </div>
   <div class="like-container">
     <div class="home-panel">
       <div class="header">
-        <h4 data-v-bcb266e0="">猜你喜欢</h4>
+        <h4 data-v-bcb266e0="">浏览历史</h4>
       </div>
       <div class="goods-list">
-         <GoodsItem v-for="good in likeList" :key="good.id" :goods="good" />
+        <GoodsItem v-for="goods in goodsList" :key="goods?.id" :goods="goods" />
       </div>
     </div>
   </div>
@@ -55,7 +50,7 @@ onMounted(() => getLikeList())
 <style scoped lang="scss">
 .home-overview {
   height: 132px;
-  background: url(@/assets/images/center-bg.png) no-repeat center / cover;
+  background: $themeColor;
   display: flex;
 
   .user-meta {
@@ -81,31 +76,6 @@ onMounted(() => getLikeList())
       font-size: 18px;
       font-weight: normal;
       color: white;
-    }
-  }
-
-  .item {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-
-    &:first-child {
-      border-right: 1px solid #f4f4f4;
-    }
-
-    a {
-      color: white;
-      font-size: 16px;
-      text-align: center;
-
-      .iconfont {
-        font-size: 32px;
-      }
-
-      p {
-        line-height: 32px;
-      }
     }
   }
 }
@@ -138,8 +108,12 @@ onMounted(() => getLikeList())
   }
 
   .goods-list {
+    width: 100%;
+    height: 80%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
+    overflow-y: scroll;
   }
 }
 </style>

@@ -1,13 +1,22 @@
-# 若贝特购物网站项目
+# VShop
 
-## 项目启动步骤
+This template should help get you started developing with Vue 3 in Vite.
 
-### 安装依赖
+## Recommended IDE Setup
+
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+
+## Customize configuration
+
+See [Vite Configuration Reference](https://vitejs.dev/config/).
+
+## Project Setup
+
 ```sh
 npm install
 ```
 
-### 编译运行
+### Compile and Hot-Reload for Development
 
 ```sh
 npm run dev
@@ -17,18 +26,4 @@ npm run dev
 
 ```sh
 npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
-### 新增文件夹用途
-```
-apis        -> API接口文件夹
-composables -> 组合函数文件夹
-directives  -> 全局指令文件夹
-styles      -> 全局样式文件夹
-utils       -> 工具函数文件夹
 ```

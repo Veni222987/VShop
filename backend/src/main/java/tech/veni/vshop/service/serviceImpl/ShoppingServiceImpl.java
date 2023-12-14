@@ -129,7 +129,15 @@ public class ShoppingServiceImpl implements ShoppingService {
         message.setFrom("csveni@163.com");
         message.setTo(email);
         message.setSubject("VShop购物订单" + orderId + "支付成功");
-        message.setText("<h3>尊敬的" + name + "，您的订单" + orderId + "已支付成功</h3>");
+        message.setText("<html><body><h3>尊敬的" + name + "，您的订单" + orderId + "已支付成功</h3>"
+                + "<p>感谢您在VShop购物！您的订单已成功支付。</p>"
+                + "<p>订单详情：</p>"
+                + "<ul>"
+                + "<li>订单编号：" + orderId + "</li>"
+                + "</ul>"
+                + "<p>您可以随时登录VShop查看订单详情。</p>"
+                + "<p>如有任何问题，请随时与我们联系。谢谢！</p>"
+                + "</body></html>");
         mailSender.send(message);
     }
 }

@@ -8,7 +8,7 @@ import router from './router'
 import '@/styles/common.scss'
 import {lazyPlugin} from "@/directives";
 //引入全局插件组件,使用时候不用引入import
-import {componentPlugin} from "@/components";
+import {componentPlugin} from "@/components/index.js";
 
 const app = createApp(App)
 const pinia=createPinia()

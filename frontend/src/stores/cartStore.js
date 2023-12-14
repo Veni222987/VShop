@@ -2,31 +2,38 @@
 import {defineStore} from "pinia";
 import {computed, ref} from "vue";
 import {useUserStore} from "@/stores/userStore";
-import {delCartApi, findNewCartListApi, insertCartApi} from "@/apis/cart";
+import {addCartApi, getCartApi, settleCartApi} from "@/apis/shopping";
 
 export const useCartStore = defineStore('cart', () => {
     const userStore=useUserStore();
 
     //isLogin是一个布尔值
-    const isLogin=computed(()=>userStore.userInfo.token)
+    const isLogin=computed(()=>userStore.userInfo)
     //定义购物车列表
     const cartList = ref([]);
     //获取最新购物车数据
     const updateCart=async ()=>{
-        const res=await findNewCartListApi();
+        const res=await getCartApi({uid:userStore.userInfo.uid});
         clearCart();
-        res.result.forEach((item)=>{
-            cartList.value.push(item)
-        })
-
+        // 更新购物车列表，商品相同则合并
+        res.data.forEach((item) => {
+            const goods = cartList.value.find((goods) => goods.goodsId === item.goodsId);
+            if (goods) {
+                goods.count += item.count;
+            } else {
+                cartList.value.push(item);
+            }
+        });
     }
     const addCart =async (goods) => {
         if (isLogin.value){
-            const {skuId,count}=goods;
-            await insertCartApi({skuId,count});
-            updateCart()
+            const {uid}=userStore.userInfo;
+            const {goodsId, count, price}=goods;
+            const sum = count * price;
+            await addCartApi({uid, goodsId, count, sum});
+            await updateCart()
         }else {
-            const item = cartList.value.find((item) => goods.skuId === item.skuId);
+            const item = cartList.value.find((item) => goods.goodsId === item.goodsId);
             if (item) {
                 //在购物车中找到相同的，只需要数量加1
                 item.count++;
@@ -41,25 +48,13 @@ export const useCartStore = defineStore('cart', () => {
     const clearCart=()=>{
         cartList.value=[]
     }
-    //删除购物车中的单个或多个商品
-    const deleteCart =async (skuId) => {
-        if (isLogin.value){
-            //调用接口
-           await delCartApi([skuId]);
-            updateCart();
-        }else {
-            const index = cartList.value.findIndex((item) => skuId === item.skuId);
-            //删除
-            cartList.value.splice(index, 1)
-        }
-    };
     // 1. 总的数量 所有项的count之和
     const allCount = computed(() => cartList.value.reduce((a, c) => a + c.count, 0))
     // 2. 总价 所有项的count*price之和
     const allPrice = computed(() => cartList.value.reduce((a, c) => a + c.count * c.price, 0))
     //单选框功能
-    const singleCheck = (skuId, selected) => {
-        const item = cartList.value.find((item) => skuId === item.skuId);
+    const singleCheck = (goodsId, selected) => {
+        const item = cartList.value.find((item) => goodsId === item.goodsId);
         item.selected = selected;
     }
     // 全选功能
@@ -81,7 +76,6 @@ export const useCartStore = defineStore('cart', () => {
     return {
         cartList,
         addCart,
-        deleteCart,
         allCount,
         allPrice,
         singleCheck,

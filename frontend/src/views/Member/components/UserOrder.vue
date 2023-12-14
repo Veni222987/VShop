@@ -1,149 +1,65 @@
 <script setup>
+
 // tab列表
 import {onMounted, ref} from "vue";
-import {getUserOrder} from "@/apis/order";
-
-// tab切换
-const tabChange = (type) => {
-  params.value.orderState = type
-  getOrderList()
-}
-const tabTypes = [
-  { name: "all", label: "全部订单" },
-  { name: "unpay", label: "待付款" },
-  { name: "deliver", label: "待发货" },
-  { name: "receive", label: "待收货" },
-  { name: "comment", label: "待评价" },
-  { name: "complete", label: "已完成" },
-  { name: "cancel", label: "已取消" }
-]
+import {getOrdersApi} from "@/apis/shopping";
+import {useUserStore} from "@/stores/userStore";
 // 订单列表
-// 获取订单列表
 const orderList = ref([])
-const params = ref({
-  orderState: 0,
-  page: 1,
-  pageSize: 2
-})
-// 补充总条数
-const total = ref(0)
+
+const goodsList = ref([])
+
+const userStore = useUserStore()
+
 const getOrderList = async () => {
-  const res = await getUserOrder(params.value)
-  orderList.value = res.result.items
-  total.value = res.result.counts
-}
-// 页数切换
-const pageChange = (page) => {
-  params.value.page = page
-  getOrderList()
+  const uid = userStore.userInfo?.uid
+  const res = await getOrdersApi({uid})
+  orderList.value = res.data
+  // 提取orderList中的goods信息并合并数组，goods不能为null
+  orderList.value.forEach(item => {
+    if (item.goods) {
+      goodsList.value.push(item.goods)
+    }
+  })
 }
 onMounted(() => getOrderList())
-// 创建格式化函数
-const fomartPayState = (payState) => {
-  const stateMap = {
-    1: '待付款',
-    2: '待发货',
-    3: '待收货',
-    4: '待评价',
-    5: '已完成',
-    6: '已取消'
-  }
-  return stateMap[payState]
-}
 </script>
 
 <template>
   <div class="order-container">
-    <el-tabs @tab-change="tabChange">
-      <!-- tab切换 -->
-      <el-tab-pane v-for="item in tabTypes" :key="item.name" :label="item.label" />
-
-      <div class="main-container">
-        <div class="holder-container" v-if="orderList.length === 0">
-          <el-empty description="暂无订单数据" />
-        </div>
-        <div v-else>
-          <!-- 订单列表 -->
-          <div class="order-item" v-for="order in orderList" :key="order.id">
-            <div class="head">
-              <span>下单时间：{{ order.createTime }}</span>
-              <span>订单编号：{{ order.id }}</span>
-              <!-- 未付款，倒计时时间还有 -->
-              <span class="down-time" v-if="order.orderState === 1">
-                <i class="iconfont icon-down-time"></i>
-                <b>付款截止: {{order.countdown}}</b>
-              </span>
-            </div>
-            <div class="body">
-              <div class="column goods">
-                <ul>
-                  <li v-for="item in order.skus" :key="item.id">
-                    <a class="image" href="javascript:;">
-                      <img :src="item.image" alt="" />
-                    </a>
-                    <div class="info">
-                      <p class="name ellipsis-2">
-                        {{ item.name }}
-                      </p>
-                      <p class="attr ellipsis">
-                        <span>{{ item.attrsText }}</span>
-                      </p>
-                    </div>
-                    <div class="price">¥{{ item.realPay?.toFixed(2) }}</div>
-                    <div class="count">x{{ item.quantity }}</div>
-                  </li>
-                </ul>
-              </div>
-              <div class="column state">
-                <p>{{ fomartPayState(order.orderState) }}</p>
-                <p v-if="order.orderState === 3">
-                  <a href="javascript:;" class="green">查看物流</a>
-                </p>
-                <p v-if="order.orderState === 4">
-                  <a href="javascript:;" class="green">评价商品</a>
-                </p>
-                <p v-if="order.orderState === 5">
-                  <a href="javascript:;" class="green">查看评价</a>
-                </p>
-              </div>
-              <div class="column amount">
-                <p class="red">¥{{ order.payMoney?.toFixed(2) }}</p>
-                <p>（含运费：¥{{ order.postFee?.toFixed(2) }}）</p>
-                <p>在线支付</p>
-              </div>
-              <div class="column action">
-                <el-button  v-if="order.orderState === 1" type="primary"
-                            size="small">
-                  立即付款
-                </el-button>
-                <el-button v-if="order.orderState === 3" type="primary" size="small">
-                  确认收货
-                </el-button>
-                <p><a href="javascript:;">查看详情</a></p>
-                <p v-if="[2, 3, 4, 5].includes(order.orderState)">
-                  <a href="javascript:;">再次购买</a>
-                </p>
-                <p v-if="[4, 5].includes(order.orderState)">
-                  <a href="javascript:;">申请售后</a>
-                </p>
-                <p v-if="order.orderState === 1"><a href="javascript:;">取消订单</a></p>
-              </div>
-            </div>
+    <div class="main-container">
+      <div class="holder-container" v-if="orderList.length === 0">
+        <el-empty description="暂无订单数据" />
+      </div>
+      <div class="order-container" v-else>
+        <!-- 订单列表 -->
+        <div class="order-item" v-for="(order, i) in goodsList" :key="order.id">
+          <div class="head">
+            <span>下单时间：{{ order.createTime }}</span>
+            <span>订单编号：{{ order.id }}</span>
           </div>
-          <!-- 分页 -->
-          <div class="pagination-container">
-            <el-pagination :total="total"
-                           @current-change="pageChange"
-                           :page-size="params.pageSize"
-                           background
-                           layout="prev, pager, next" />
+          <div class="body">
+            <div class="column goods">
+              <img class="image" :src="order.coverUrl" alt="" />
+              <div class="info">
+                <p class="name ellipsis-2">
+                  {{ order.title }}
+                </p>
+                <p class="attr ellipsis">
+                  <span>{{ order.category }}</span>
+                </p>
+              </div>
+              <div class="price">¥{{ order.price }}</div>
+              <div class="count">x{{ orderList[i].count }}</div>
+            </div>
+            <div class="column amount">
+              <p class="red">¥{{ orderList[i].sum }}</p>
+            </div>
           </div>
         </div>
       </div>
-
-    </el-tabs>
+    </div>
   </div>
-
 </template>
 
 <style scoped lang="scss">
@@ -163,6 +79,10 @@ const fomartPayState = (payState) => {
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+
+    .order-container {
+      overflow-y: scroll;
     }
   }
 }
@@ -223,56 +143,47 @@ const fomartPayState = (payState) => {
 
       &.goods {
         flex: 1;
-        padding: 0;
+        //padding: 0;
         align-self: center;
+        border-bottom: 1px solid #f5f5f5;
+        padding: 10px;
+        display: flex;
 
-        ul {
-          li {
-            border-bottom: 1px solid #f5f5f5;
-            padding: 10px;
-            display: flex;
+        .image {
+          width: 70px;
+          height: 70px;
+          border: 1px solid #f5f5f5;
+        }
 
-            &:last-child {
-              border-bottom: none;
+        .info {
+          width: 220px;
+          text-align: left;
+          padding: 0 10px;
+
+          p {
+            margin-bottom: 5px;
+
+            &.name {
+              height: 38px;
             }
 
-            .image {
-              width: 70px;
-              height: 70px;
-              border: 1px solid #f5f5f5;
-            }
+            &.attr {
+              color: #999;
+              font-size: 12px;
 
-            .info {
-              width: 220px;
-              text-align: left;
-              padding: 0 10px;
-
-              p {
-                margin-bottom: 5px;
-
-                &.name {
-                  height: 38px;
-                }
-
-                &.attr {
-                  color: #999;
-                  font-size: 12px;
-
-                  span {
-                    margin-right: 5px;
-                  }
-                }
+              span {
+                margin-right: 5px;
               }
             }
-
-            .price {
-              width: 100px;
-            }
-
-            .count {
-              width: 80px;
-            }
           }
+        }
+
+        .price {
+          width: 100px;
+        }
+
+        .count {
+          width: 80px;
         }
       }
 
@@ -280,7 +191,7 @@ const fomartPayState = (payState) => {
         width: 120px;
 
         .green {
-          color: $xtxColor;
+          color: $themeColor;
         }
       }
 
@@ -299,7 +210,7 @@ const fomartPayState = (payState) => {
           display: block;
 
           &:hover {
-            color: $xtxColor;
+            color: $themeColor;
           }
         }
       }

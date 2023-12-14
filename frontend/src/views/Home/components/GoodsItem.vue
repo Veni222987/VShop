@@ -1,16 +1,34 @@
 <script setup>
-defineProps({
+import { computed } from 'vue'
+import { addHistoryApi } from "@/apis/shopping";
+import {useUserStore} from "@/stores/userStore";
+
+const props = defineProps({
   goods: {
     type: Object,
-    default: () => ({ })
+    default: () => ({})
   }
 })
+
+const link = computed(() => {
+  return {
+    path: `/detail/${props.goods.goodsId}`
+  }
+})
+
+// 添加浏览历史
+const addHistory = () => {
+  addHistoryApi({
+    uid: useUserStore().userInfo.uid,
+    goodsId: props.goods.goodsId
+  })
+}
 </script>
 <template>
-  <RouterLink to="/" class="goods-item">
-    <img v-img-lazy="goods.picture" alt="" />
-    <p class="name ellipsis">{{ goods.name }}</p>
-    <p class="desc ellipsis">{{ goods.desc }}</p>
+  <RouterLink :to=link @click="addHistory" class="goods-item">
+    <img v-img-lazy="goods.coverUrl" alt="" />
+    <p class="name ellipsis">{{ goods.title }}</p>
+<!--    <p class="desc ellipsis">{{ goods.desc }}</p>-->
     <p class="price">&yen;{{ goods.price }}</p>
   </RouterLink>
 </template>

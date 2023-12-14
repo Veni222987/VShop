@@ -1,8 +1,7 @@
 <script setup>
-import {getDetailApi} from "@/apis/detail";
+import {getGoodsDetailApi} from "@/apis/shopping";
 import {useRoute} from "vue-router";
 import {onMounted, ref} from "vue";
-import DetailHot from "@/views/Detail/components/DetailHot.vue";
 import {ElMessage} from "element-plus";
 import {useCartStore} from "@/stores/cartStore";
 
@@ -10,10 +9,9 @@ const cartStore=useCartStore()
 const route = useRoute()
 const goods = ref({});
 const getDetail = async () => {
-  const res = await getDetailApi(route.params.id);
-  console.log(res.data,'ssssssssss')
+  const goods_id = route.params.id
+  const res = await getGoodsDetailApi({goods_id});
   goods.value = res.data;
-  console.log(goods,'ssssssssss')
 }
 onMounted(() => getDetail())
 let skuObj = {};
@@ -27,15 +25,23 @@ const countChange = (count) => {
   count.value=count;
 }
 //添加购物车
-
+const addCart = () => {
+  cartStore.addCart({
+    goodsId:goods.value.goodsId,
+    name:goods.value.name,
+    picture:goods.value.detailUrl,
+    price:goods.value.price,
+    count:count.value,
+    selected:true
+  });
+  ElMessage.success('成功加入购物车');
+}
 </script>
 
 <template>
-  <!-- <div>11111111111</div> -->
   <div class="xtx-goods-page">
-    <!-- <div>111111</div> -->
     <el-backtop :right="20" :bottom="20"/>
-    <div class="container" v-if="goods">
+    <div class="container" v-if="!!goods">
       <div class="bread-container">
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
@@ -43,6 +49,8 @@ const countChange = (count) => {
           解决方案1：可选链语法,例如 goods.categories?.[1].id 中，'?.'表示goods.categories中有数据才进行后面的运算
           解决方案2：v-if
           -->
+          <el-breadcrumb-item>{{ goods.category }}
+          </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
       <!-- 商品信息 -->
@@ -50,9 +58,16 @@ const countChange = (count) => {
         <div>
           <div class="goods-info">
             <div class="media">
+              <!-- 图片预览区 -->
+              <img :src="goods.detailUrl"/>
             </div>
             <div class="spec">
               <!-- 商品信息区 -->
+              <p class="g-name"> {{ goods.title }}</p>
+              <p class="g-desc">{{ goods.desc }} </p>
+              <p class="g-price">
+                <span>{{ goods.price }}</span>
+              </p>
               <div class="g-service">
                 <dl>
                   <dt>促销</dt>
@@ -67,6 +82,16 @@ const countChange = (count) => {
                     <a href="javascript:;">了解详情</a>
                   </dd>
                 </dl>
+              </div>
+              <!-- sku组件 -->
+<!--              <XtxSku :goods="goods" @change="skuChange"/>-->
+              <!-- 数据组件 -->
+              <el-input-number v-model="count" :min="1" @change="countChange"/>
+              <!-- 按钮组件 -->
+              <div>
+                <el-button size="large" class="btn" @click="addCart">
+                  加入购物车
+                </el-button>
               </div>
             </div>
           </div>
@@ -156,12 +181,6 @@ const countChange = (count) => {
         margin-right: 10px;
         font-size: 22px;
       }
-
-      &:last-child {
-        color: #999;
-        text-decoration: line-through;
-        font-size: 16px;
-      }
     }
   }
 
@@ -190,13 +209,13 @@ const countChange = (count) => {
 
             &::before {
               content: "•";
-              color: $xtxColor;
+              color: $themeColor;
               margin-right: 2px;
             }
           }
 
           a {
-            color: $xtxColor;
+            color: $themeColor;
           }
         }
       }
@@ -238,13 +257,13 @@ const countChange = (count) => {
           margin-top: 10px;
 
           i {
-            color: $xtxColor;
+            color: $themeColor;
             font-size: 14px;
             margin-right: 2px;
           }
 
           &:hover {
-            color: $xtxColor;
+            color: $themeColor;
             cursor: pointer;
           }
         }
