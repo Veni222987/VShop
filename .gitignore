@@ -46,4 +46,5 @@ build/
 *.zip
 
 ### config ###
-backend/src/main/resources/application.properties
+backend/src/main/resources/application2.properties
+backend/src/main/resources/application.yaml
